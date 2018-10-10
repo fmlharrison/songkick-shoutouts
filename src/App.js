@@ -66,10 +66,10 @@ class App extends Component {
             <div className="shout-outs">
               {this.state.shoutOuts.map(shout => {
                 return (
-                  <div class="shoutout-container">
-                    <p class="recipient">For: {shout.recipient}</p>
-                    <p class="from">From: {shout.shouter}</p>
-                    <p class="message">{shout.message}</p>
+                  <div className="shoutout-container">
+                    <p className="recipient">For: {shout.recipient}</p>
+                    <p className="from">From: {shout.shouter}</p>
+                    <p className="message">{shout.message}</p>
                   </div>
                 );
               })}

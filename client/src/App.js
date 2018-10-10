@@ -3,34 +3,33 @@ import "./App.css";
 
 import skLogo from "./images/songkick_badge_pink.png";
 
-const cannedShoutouts = [
-  {
-    recipient: "Alice",
-    shouter: "Felix",
-    message: "For trying so hard to get the crew Glastonbury tickets!!"
-  },
-  {
-    recipient: "Joe",
-    shouter: "Alexey",
-    message: "For being a kick ass tech lead!!"
-  },
-  {
-    recipient: "Felix",
-    shouter: "Joe",
-    message: "For beating me so convincingly at table tennis."
-  }
-];
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      shoutOuts: cannedShoutouts,
+      shoutOuts: [],
       recipient: "",
       shouter: "",
       message: ""
     };
   }
+
+  componentDidMount = () => {
+    this.fetchShoutouts()
+      .then(res => {
+        this.setState({ shoutOuts: res });
+      })
+      .catch(err => console.log(err));
+  };
+
+  fetchShoutouts = async () => {
+    const response = await fetch("/api/shoutouts");
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
+  };
 
   handleChange = event => {
     const target = event.currentTarget;

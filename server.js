@@ -1,26 +1,46 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const firebase = require("firebase-admin");
+
+const serviceAccount = require("./serviceAccountKey.json");
+
+firebase.initializeApp({
+  credential: firebase.credential.cert(serviceAccount),
+  databaseURL: "https://songkick-shoutouts.firebaseio.com"
+});
 
 const app = express();
 const port = process.env.PORT || 8080;
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+const shoutDb = firebase.database().ref("shoutouts");
+
 app.get("/api/shoutouts", (req, res) => {
-  res.send([
-    {
-      recipient: "Alice",
-      shouter: "Felix",
-      message: "For trying so hard to get the crew Glastonbury tickets!!"
-    },
-    {
-      recipient: "Joe",
-      shouter: "Alexey",
-      message: "For being a kick ass tech lead!!"
-    },
-    {
-      recipient: "Felix",
-      shouter: "Joe",
-      message: "For beating me so convincingly at table tennis."
+  shoutDb.once("value").then(snap => {
+    const shoutouts = snap.val();
+    res.send(Object.values(shoutouts));
+  });
+});
+
+app.post("/api/shoutouts", (req, res) => {
+  const newRef = shoutDb.push();
+
+  const shoutout = req.body;
+  shoutout.createdAt = firebase.database.ServerValue.TIMESTAMP;
+  shoutout.id = newRef.key;
+
+  newRef.set(shoutout, error => {
+    if (error) {
+      res.send(error);
+    } else {
+      shoutDb.once("value").then(snap => {
+        const shoutouts = snap.val();
+        res.send(Object.values(shoutouts));
+      });
     }
-  ]);
+  });
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

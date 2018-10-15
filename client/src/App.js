@@ -31,6 +31,22 @@ class App extends Component {
     return body;
   };
 
+  saveShoutout = async data => {
+    const response = await fetch("/api/shoutouts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    });
+
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
+  };
+
   handleChange = event => {
     const target = event.currentTarget;
     const inputType = target.dataset.inputType;
@@ -39,17 +55,20 @@ class App extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
     const shoutOut = {
       recipient: this.state.recipient,
       shouter: this.state.shouter,
       message: this.state.message
     };
 
-    this.setState({
-      shoutOuts: [shoutOut, ...this.state.shoutOuts],
-      recipient: "",
-      shouter: "",
-      message: ""
+    this.saveShoutout(shoutOut).then(res => {
+      this.setState({
+        shoutOuts: res,
+        recipient: "",
+        shouter: "",
+        message: ""
+      });
     });
   };
 
@@ -65,7 +84,7 @@ class App extends Component {
             <div className="shout-outs">
               {this.state.shoutOuts.map(shout => {
                 return (
-                  <div className="shoutout-container">
+                  <div className="shoutout-container" key={shout.id}>
                     <p className="recipient">For: {shout.recipient}</p>
                     <p className="from">From: {shout.shouter}</p>
                     <p className="message">{shout.message}</p>

@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const firebase = require("firebase-admin");
 
-const serviceAccount = require("./serviceAccountKey.json");
+const serviceAccount = require("./config/serviceAccountKey.json");
 
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
@@ -15,7 +15,8 @@ const port = process.env.PORT || 8080;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const shoutDb = firebase.database().ref("shoutouts");
+const firebaseConfig = require("./db/index.js");
+const shoutDb = firebaseConfig.shoutoutsDb;
 
 app.get("/api/shoutouts", (req, res) => {
   shoutDb.once("value").then(snap => {

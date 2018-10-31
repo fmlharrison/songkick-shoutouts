@@ -6,7 +6,6 @@ class Sidebar extends Component {
     const target = event.currentTarget;
     const inputType = target.dataset.inputType;
     this.props.handleFormInput(inputType, target.value);
-    // this.props.handleFormInput({ [inputType]: target.value });
   };
 
   handleSubmit = event => {

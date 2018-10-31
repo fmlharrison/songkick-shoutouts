@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import firebase from "../../config/firebase";
 
 import Shoutouts from "./Shoutouts";
 import Sidebar from "./Sidebar/SidebarContainer";
 
 import "./Shoutouts.css";
+
+const shoutOutsDb = firebase.database().ref("shoutouts");
 
 class ShoutoutsContainer extends Component {
   constructor(props) {
@@ -13,21 +16,15 @@ class ShoutoutsContainer extends Component {
     };
   }
 
-  componentDidMount = () => {
-    this.fetchShoutouts()
-      .then(res => {
-        this.setState({ shoutOuts: this.orderShoutouts(res) });
-      })
-      .catch(err => console.log(err));
-  };
+  componentDidMount() {
+    shoutOutsDb.on("value", snapshot => {
+      const data = this.formatShoutouts(snapshot.val())
+      this.setState({ shoutOuts: this.orderShoutouts(data) });
+    });
+  }
 
-  fetchShoutouts = async () => {
-    const response = await fetch("/api/shoutouts");
-    const body = await response.json();
-
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
+  formatShoutouts = data => {
+    return Object.values(data);
   };
 
   updateShoutouts = shoutouts => {

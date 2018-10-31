@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import firebase from "../../../config/firebase";
 
 import "./Sidebar.css";
 import Sidebar from "./Sidebar";
+
+const shoutOutsDb = firebase.database().ref("shoutouts");
 
 export class SidebarContainer extends Component {
   constructor(props) {
@@ -18,31 +21,26 @@ export class SidebarContainer extends Component {
     this.setState({ [type]: value });
   };
 
-  saveShoutout = async data => {
-    const response = await fetch("/api/shoutouts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      },
-      body: JSON.stringify(data)
+  saveShoutout = data => {
+    const newRef = shoutOutsDb.push();
+    data.createdAt = firebase.database.ServerValue.TIMESTAMP;
+    data.id = newRef.key;
+
+    newRef.set(data, error => {
+      if (error) {
+        console.log(error);
+      } else {
+        this.setState({
+          recipient: "",
+          shouter: "",
+          message: ""
+        });
+      }
     });
-
-    const body = await response.json();
-
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
   };
 
   saveSubmittedShoutout = shoutOut => {
-    this.saveShoutout(shoutOut).then(res => {
-      this.props.updateShoutouts(res)
-      this.setState({
-        recipient: "",
-        shouter: "",
-        message: ""
-      });
-    });
+    this.saveShoutout(shoutOut);
   };
 
   render() {
@@ -62,7 +60,7 @@ export class SidebarContainer extends Component {
 }
 
 SidebarContainer.propTypes = {
-  updateShoutouts: PropTypes.func.isRequired,
+  updateShoutouts: PropTypes.func.isRequired
 };
 
 export default SidebarContainer;

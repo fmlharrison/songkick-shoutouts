@@ -1,5 +1,7 @@
 import * as firebase from "firebase";
-import { firebaseConfig } from "../config/serviceAccountKey"
+import Config from "../config/serviceAccountKey"
+
+const firebaseConfig = process.env.NODE_ENV === 'production' ? Config.firebaseConfigProd : Config.firebaseConfigDev;
 
 firebase.initializeApp(firebaseConfig);
 

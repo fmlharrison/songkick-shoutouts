@@ -5,7 +5,7 @@ import { withFirebase } from './components/Firebase';
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import ShoutoutsContainer from "./components/Shoutouts/ShoutoutsContainer";
-import SignupContainer from "./components/Authentication/Signup/SignupContainer";
+import SignUpContainer from "./components/Authentication/Signup/SignUpContainer";
 
 import * as routes from "./constants/routes";
 
@@ -19,7 +19,7 @@ class App extends Component {
           <div className="page">
             <Header />
             <Route exact path={routes.LANDING} component={withFirebase(ShoutoutsContainer)} />
-            <Route exact path={routes.SIGN_UP} component={SignupContainer} />
+            <Route exact path={routes.SIGN_UP} component={SignUpContainer} />
           </div>
           <Footer />
         </div>

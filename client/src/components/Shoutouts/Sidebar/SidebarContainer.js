@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import firebase from "../../../config/firebase";
 
 import "./Sidebar.css";
 import Sidebar from "./Sidebar";
-
-const shoutOutsDb = firebase.database().ref("shoutouts");
 
 export class SidebarContainer extends Component {
   constructor(props) {
@@ -22,8 +19,8 @@ export class SidebarContainer extends Component {
   };
 
   saveShoutout = data => {
-    const newRef = shoutOutsDb.push();
-    data.createdAt = firebase.database.ServerValue.TIMESTAMP;
+    const newRef = this.props.firebase.databaseReference().push();
+    data.createdAt = this.props.firebase.databaseTimeStamp();
     data.id = newRef.key;
 
     newRef.set(data, error => {

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import firebase from "../../config/firebase";
 
 import Shoutouts from "./Shoutouts";
 import Sidebar from "./Sidebar/SidebarContainer";
+import { withFirebase } from "../Firebase";
 
 import "./Shoutouts.css";
 
-const shoutOutsDb = firebase.database().ref("shoutouts");
+const SidebarContainer = withFirebase(Sidebar)
 
 class ShoutoutsContainer extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class ShoutoutsContainer extends Component {
   }
 
   componentDidMount() {
-    shoutOutsDb.on("value", snapshot => {
+    this.props.firebase.databaseReference().on("value", snapshot => {
       const data = this.formatShoutouts(snapshot.val())
       this.setState({ shoutOuts: this.orderShoutouts(data) });
     });
@@ -45,7 +45,7 @@ class ShoutoutsContainer extends Component {
             return <Shoutouts shoutout={shout} />;
           })}
         </div>
-        <Sidebar updateShoutouts={this.updateShoutouts} />
+        <SidebarContainer updateShoutouts={this.updateShoutouts} />
       </div>
     );
   }

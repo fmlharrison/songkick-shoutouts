@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import firebase from "../../../config/firebase";
-
-const shoutOutsDb = firebase.database().ref("shoutouts");
 
 export class SignupContainer extends Component {
   constructor(props) {

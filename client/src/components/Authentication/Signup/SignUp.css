@@ -1,0 +1,52 @@
+.signup-container h1
+{
+  text-align: center;
+}
+
+.sign-up-form
+{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  min-width: 360px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.sign-up-form > .form-input
+{
+  height: 35px;
+  margin-bottom: 20px; 
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  padding: 2px 5px;
+}
+
+.sign-up-form > .form-input:focus
+{
+  outline: none;
+}
+
+.sign-up-form > .sign-up-button
+{
+  width: 200px;
+  height: 35px;
+  margin: 0 auto;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.sign-up-form > .sign-up-button:hover
+{
+  cursor: pointer;
+}
+
+.sign-up-form > .error-message
+{
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+}

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import { withFirebase } from './components/Firebase';
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import ShoutoutsContainer from "./components/Shoutouts/ShoutoutsContainer";
@@ -18,7 +17,7 @@ class App extends Component {
         <div className="app">
           <div className="page">
             <Header />
-            <Route exact path={routes.LANDING} component={withFirebase(ShoutoutsContainer)} />
+            <Route exact path={routes.LANDING} component={ShoutoutsContainer} />
             <Route exact path={routes.SIGN_UP} component={SignUpContainer} />
           </div>
           <Footer />

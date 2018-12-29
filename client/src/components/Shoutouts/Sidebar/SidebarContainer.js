@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import "./Sidebar.css";
 import Sidebar from "./Sidebar";
 
+import { withFirebase } from "../../Firebase";
+
 export class SidebarContainer extends Component {
   constructor(props) {
     super(props);
@@ -60,4 +62,4 @@ SidebarContainer.propTypes = {
   updateShoutouts: PropTypes.func.isRequired
 };
 
-export default SidebarContainer;
+export default withFirebase(SidebarContainer);

@@ -6,8 +6,6 @@ import { withFirebase } from "../Firebase";
 
 import "./Shoutouts.css";
 
-const ConnectedSidebarContainer = withFirebase(Sidebar)
-
 class ShoutoutsContainer extends Component {
   constructor(props) {
     super(props);
@@ -45,10 +43,10 @@ class ShoutoutsContainer extends Component {
             return <Shoutouts shoutout={shout} />;
           })}
         </div>
-        <ConnectedSidebarContainer updateShoutouts={this.updateShoutouts} />
+        <Sidebar updateShoutouts={this.updateShoutouts} />
       </div>
     );
   }
 }
 
-export default ShoutoutsContainer;
+export default withFirebase(ShoutoutsContainer);

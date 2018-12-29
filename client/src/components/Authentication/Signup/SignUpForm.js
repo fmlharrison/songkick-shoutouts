@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { compose } from "recompose";
+
+import { withFirebase } from "../../Firebase";
 import * as routes from "../../../constants/routes";
 
 const INITIAL_STATE = {
@@ -123,4 +127,7 @@ class SignUpForm extends Component {
   }
 }
 
-export default SignUpForm;
+export default compose(
+  withRouter,
+  withFirebase
+)(SignUpForm);

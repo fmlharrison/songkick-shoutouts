@@ -1,23 +1,28 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
-export class SignUpContainer extends Component {
+import { withFirebase } from "../../Firebase";
+
+import SignUpForm from "./SignUpForm";
+
+import "./SignUp.css";
+
+const ConnectedSignUpForm = withRouter(withFirebase(SignUpForm));
+
+class SignUpContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   render() {
     return (
       <div className="signup-container">
         <h1>SignUp to Songkick Shoutouts</h1>
+        <ConnectedSignUpForm />
       </div>
     );
   }
 }
-
-SignUpContainer.propTypes = {
-};
 
 export default SignUpContainer;

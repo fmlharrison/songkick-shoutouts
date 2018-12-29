@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+import * as routes from "../../../constants/routes";
 
 const INITIAL_STATE = {
   displayName: "",
@@ -21,6 +21,34 @@ class SignUpForm extends Component {
     this.setState({ [targetEvent.name]: targetEvent.value });
   };
 
+  onSubmit = event => {
+    event.preventDefault();
+    const { displayName, username, email, password } = this.state;
+
+    if (email.split("@")[1] !== "songkick.com") {
+      return this.setState({
+        error: { message: "Email must be a '@songkick.com' email." }
+      });
+    }
+
+    this.props.firebase
+      .doCreateUserWithEmailAndPassword(email, password)
+      .then(authUser => {
+        return this.props.firebase.user(authUser.user.uid).set({
+          displayName,
+          username,
+          email
+        });
+      })
+      .then(() => {
+        this.setState({ ...INITIAL_STATE });
+        this.props.history.push(routes.LANDING);
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
   render() {
     const {
       displayName,
@@ -31,15 +59,23 @@ class SignUpForm extends Component {
       error
     } = this.state;
 
+    const isInvalid =
+      password !== repeatedPassword ||
+      password === "" ||
+      displayName === "" ||
+      username === "" ||
+      email === "";
+
     return (
-      <form onSubmit={this.onSubmit} class="sign-up-form">
+      <form onSubmit={this.onSubmit} className="sign-up-form">
         <input
           type="text"
           name="displayName"
           value={displayName}
           onChange={this.onChange}
           placeholder="Enter a display name."
-          class="display-name"
+          className="form-input"
+          required
         />
         <input
           type="text"
@@ -47,42 +83,44 @@ class SignUpForm extends Component {
           value={username}
           onChange={this.onChange}
           placeholder="Enter a username."
-          class="username"
+          className="form-input"
+          required
         />
         <input
-          type="text"
+          type="email"
           name="email"
           value={email}
           onChange={this.onChange}
           placeholder="Enter a email."
-          class="email"
+          className="form-input"
+          required
         />
         <input
-          type="text"
+          type="password"
           name="password"
           value={password}
           onChange={this.onChange}
           placeholder="Enter a password."
-          class="password"
+          className="form-input"
+          required
         />
         <input
-          type="text"
+          type="password"
           name="repeatedPassword"
           value={repeatedPassword}
           onChange={this.onChange}
           placeholder="Re-enter your password."
-          class="password"
+          className="form-input"
+          required
         />
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={isInvalid} className="sign-up-button">
+          Sign Up
+        </button>
 
-        {error && <p>{error.message}</p>}
+        {error && <p className="error-message">{error.message}</p>}
       </form>
     );
   }
 }
-
-SignUpForm.prototype = {
-  onCompletedSignUpForm: PropTypes.func
-};
 
 export default SignUpForm;

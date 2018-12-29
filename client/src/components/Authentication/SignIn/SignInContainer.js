@@ -6,7 +6,7 @@ import "./SignIn.css";
 
 const SignInContainer = () => (
   <div className="sign-in-container">
-    <h1>Sign In to Songkick Shoutouts</h1>
+    <h1>Sign In</h1>
     <SignInForm />
   </div>
 );

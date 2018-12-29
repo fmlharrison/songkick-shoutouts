@@ -6,7 +6,7 @@ import "./SignUp.css";
 
 const SignUpContainer = () => (
   <div className="signup-container">
-    <h1>Sign Up to Songkick Shoutouts</h1>
+    <h1>Sign Up</h1>
     <SignUpForm />
   </div>
 );

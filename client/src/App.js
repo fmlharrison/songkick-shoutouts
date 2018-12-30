@@ -12,12 +12,20 @@ import * as routes from "./constants/routes";
 import "./App.css";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      authUser: null
+    }
+  }
+
   render() {
     return (
       <Router>
         <div className="app">
           <div className="page">
-            <Header />
+            <Header user={this.state.authUser} />
             <Route exact path={routes.LANDING} component={ShoutoutsContainer} />
             <Route exact path={routes.SIGN_UP} component={SignUpContainer} />
             <Route exact path={routes.SIGN_IN} component={SignInContainer} />

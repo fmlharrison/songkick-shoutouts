@@ -1,29 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import PropTypes from "prop-types";
 
 import SignOut from "../Authentication/SignOut";
-import { AuthUserContext } from "../Session";
+import { withAuthentication } from "../Session";
 
 import * as routes from "../../constants/routes";
 
 import "./Navigation.css";
 
 class Navigation extends Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = {
-  //     user: this.props.user
-  //   };
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({ user: nextProps.user });
-  // }
-
-  renderNavLinks = (authUser) => {
-    if (authUser) {
+  renderNavLinks = () => {
+    if (this.props.authUser) {
       return (
         <ul className="navigation-links">
           <li>
@@ -51,21 +38,10 @@ class Navigation extends Component {
   render() {
     return (
       <div className="navigation">
-        <AuthUserContext.Consumer>
-          {authUser => this.renderNavLinks(authUser)}
-        </AuthUserContext.Consumer>
+        {this.renderNavLinks()}
       </div>
     );
   }
 }
 
-// Navigation.propTypes = {
-//   user: PropTypes.shape({
-//     id: PropTypes.string,
-//     displayName: PropTypes.string,
-//     username: PropTypes.string,
-//     email: PropTypes.string
-//   })
-// };
-
-export default Navigation;
+export default withAuthentication(Navigation);

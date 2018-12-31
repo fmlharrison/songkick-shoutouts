@@ -7,7 +7,7 @@ import ShoutoutsContainer from "./components/Shoutouts/ShoutoutsContainer";
 import SignUpContainer from "./components/Authentication/Signup/SignUpContainer";
 import SignInContainer from "./components/Authentication/SignIn/SignInContainer";
 
-import { withAuthentication } from "./components/Session";
+import { provideAuthentication } from "./components/Session";
 import * as routes from "./constants/routes";
 
 import "./App.css";
@@ -26,4 +26,4 @@ const App = () => (
   </Router>
 );
 
-export default withAuthentication(App);
+export default provideAuthentication(App);

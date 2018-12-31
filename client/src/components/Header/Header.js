@@ -1,5 +1,4 @@
 import React from "react";
-// import PropTypes from "prop-types";
 
 import Navigation from "../Navigation/Navigation";
 import "./Header.css";
@@ -19,14 +18,5 @@ const Header = ({ user }) => {
     </header>
   );
 };
-
-// Header.propTypes = {
-//   user: PropTypes.shape({
-//     id: PropTypes.string,
-//     displayName: PropTypes.string,
-//     username: PropTypes.string,
-//     email: PropTypes.string
-//   })
-// };
 
 export default Header;

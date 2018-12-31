@@ -17,6 +17,10 @@ class Navigation extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ user: nextProps.user })
+  }
+
   renderNavLinks = () => {
     if (this.state.user) {
       return (

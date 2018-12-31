@@ -7,6 +7,7 @@ import ShoutoutsContainer from "./components/Shoutouts/ShoutoutsContainer";
 import SignUpContainer from "./components/Authentication/Signup/SignUpContainer";
 import SignInContainer from "./components/Authentication/SignIn/SignInContainer";
 
+import { withFirebase } from "./components/Firebase";
 import * as routes from "./constants/routes";
 
 import "./App.css";
@@ -17,7 +18,15 @@ class App extends Component {
 
     this.state = {
       authUser: null
-    }
+    };
+  }
+
+  componentDidMount() {
+    this.props.firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? this.setState({ authUser })
+        : this.setState({ authUser: null });
+    });
   }
 
   render() {
@@ -37,4 +46,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withFirebase(App);

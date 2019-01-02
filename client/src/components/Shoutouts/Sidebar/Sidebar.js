@@ -22,33 +22,36 @@ class Sidebar extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className="form">
-        <input
-          type="text"
-          className="form-item recipient"
-          value={this.props.recipient}
-          onChange={this.handleChange}
-          data-input-type="recipient"
-          placeholder="For who?"
-        />
-        <input
-          type="text"
-          className="form-item shouter"
-          value={this.props.shouter}
-          onChange={this.handleChange}
-          data-input-type="shouter"
-          placeholder="Who are you?"
-        />
-        <textarea
-          type="text"
-          className="form-item message"
-          value={this.props.message}
-          onChange={this.handleChange}
-          data-input-type="message"
-          placeholder="What's your shoutout?"
-        />
-        <input type="submit" className="form-item submit" value="Shout it!" />
-      </form>
+      <div>
+        <h1>Got a Shoutout for someone?</h1>
+        <form onSubmit={this.handleSubmit} className="form">
+          <input
+            type="text"
+            className="form-item recipient"
+            value={this.props.recipient}
+            onChange={this.handleChange}
+            data-input-type="recipient"
+            placeholder="For who?"
+          />
+          <input
+            type="text"
+            className="form-item shouter"
+            value={this.props.shouter}
+            onChange={this.handleChange}
+            data-input-type="shouter"
+            placeholder="Who are you?"
+          />
+          <textarea
+            type="text"
+            className="form-item message"
+            value={this.props.message}
+            onChange={this.handleChange}
+            data-input-type="message"
+            placeholder="What's your shoutout?"
+          />
+          <input type="submit" className="form-item submit" value="Shout it!" />
+        </form>
+      </div>
     );
   }
 }

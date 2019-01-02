@@ -47,7 +47,6 @@ export class SidebarContainer extends Component {
   render() {
     return (
       <div className="sidebar">
-        <h1>Got a Shoutout for someone?</h1>
         <Sidebar
           submitNewShoutout={this.saveSubmittedShoutout}
           handleFormInput={this.updateForm}

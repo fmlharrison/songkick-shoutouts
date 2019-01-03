@@ -40,7 +40,7 @@ class ShoutoutsContainer extends Component {
 
   render() {
     return (
-      <div className="main">
+      <div>
         <div className="shout-outs">
           {this.state.shoutOuts.map(shout => {
             return <Shoutouts shoutout={shout} />;

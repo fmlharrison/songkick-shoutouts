@@ -17,11 +17,13 @@ const App = () => (
     <div className="app">
       <div className="page">
         <Header />
-        <Route exact path={routes.LANDING} component={ShoutoutsContainer} />
-        <Route exact path={routes.SIGN_UP} component={SignUpContainer} />
-        <Route exact path={routes.SIGN_IN} component={SignInContainer} />
+        <div className="main">
+          <Route exact path={routes.LANDING} component={ShoutoutsContainer} />
+          <Route exact path={routes.SIGN_UP} component={SignUpContainer} />
+          <Route exact path={routes.SIGN_IN} component={SignInContainer} />
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   </Router>
 );

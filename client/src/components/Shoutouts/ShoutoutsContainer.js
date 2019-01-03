@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { compose } from "recompose";
 
 import Shoutouts from "./Shoutouts";
 import Sidebar from "./Sidebar/SidebarContainer";
+
 import { withFirebase } from "../Firebase";
+import { withAuthentication } from "../Session";
 
 import "./Shoutouts.css";
 
@@ -43,10 +46,13 @@ class ShoutoutsContainer extends Component {
             return <Shoutouts shoutout={shout} />;
           })}
         </div>
-        <Sidebar updateShoutouts={this.updateShoutouts} />
+        { this.props.authUser ? <Sidebar updateShoutouts={this.updateShoutouts} /> : null }
       </div>
     );
   }
 }
 
-export default withFirebase(ShoutoutsContainer);
+export default compose(
+  withAuthentication,
+  withFirebase
+)(ShoutoutsContainer);

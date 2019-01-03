@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { compose } from "recompose";
 
 import "./Sidebar.css";
 import Sidebar from "./Sidebar";
 
 import { withFirebase } from "../../Firebase";
-import { withAuthentication } from "../../Session";
 
 export class SidebarContainer extends Component {
   constructor(props) {
@@ -63,7 +61,4 @@ SidebarContainer.propTypes = {
   updateShoutouts: PropTypes.func.isRequired
 };
 
-export default compose(
-  withAuthentication,
-  withFirebase
-)(SidebarContainer);
+export default withFirebase(SidebarContainer);

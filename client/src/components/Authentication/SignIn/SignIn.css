@@ -1,6 +1,9 @@
 .sign-in-container
 {
-  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .sign-in-container h1

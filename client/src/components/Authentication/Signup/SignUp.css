@@ -1,6 +1,9 @@
 .signup-container
 {
-  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .signup-container h1

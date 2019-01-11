@@ -5,7 +5,6 @@ import Shoutouts from "./Shoutouts";
 import Sidebar from "./Sidebar/SidebarContainer";
 
 import { withFirebase } from "../Firebase";
-import { withAuthentication } from "../Session";
 
 import "./Shoutouts.css";
 
@@ -40,19 +39,18 @@ class ShoutoutsContainer extends Component {
 
   render() {
     return (
-      <div>
+      <div class="main">
         <div className="shout-outs">
           {this.state.shoutOuts.map(shout => {
             return <Shoutouts shoutout={shout} />;
           })}
         </div>
-        { this.props.authUser ? <Sidebar updateShoutouts={this.updateShoutouts} /> : null }
+        <Sidebar updateShoutouts={this.updateShoutouts} />
       </div>
     );
   }
 }
 
 export default compose(
-  withAuthentication,
   withFirebase
 )(ShoutoutsContainer);

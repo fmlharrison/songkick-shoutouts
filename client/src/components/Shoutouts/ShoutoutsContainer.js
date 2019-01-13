@@ -17,13 +17,14 @@ class ShoutoutsContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.firebase.databaseReference().on("value", snapshot => {
-      const data = this.formatShoutouts(snapshot.val())
+    this.props.firebase.shoutoutsDb().on("value", snapshot => {
+      const data = this.formatShoutouts(snapshot.val());
       this.setState({ shoutOuts: this.orderShoutouts(data) });
     });
   }
 
   formatShoutouts = data => {
+    if (!data) return [];
     return Object.values(data);
   };
 
@@ -39,7 +40,7 @@ class ShoutoutsContainer extends Component {
 
   render() {
     return (
-      <div class="main">
+      <div className="main">
         <div className="shout-outs">
           {this.state.shoutOuts.map(shout => {
             return <Shoutouts shoutout={shout} />;
@@ -51,6 +52,4 @@ class ShoutoutsContainer extends Component {
   }
 }
 
-export default compose(
-  withFirebase
-)(ShoutoutsContainer);
+export default compose(withFirebase)(ShoutoutsContainer);

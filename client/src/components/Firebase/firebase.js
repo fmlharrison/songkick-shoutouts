@@ -16,8 +16,8 @@ class Firebase {
     this.auth = app.auth();
   }
 
-  databaseReference = () => this.database.ref("shoutouts");
-
+  shoutoutsDb = () => this.database.ref("shoutouts");
+  
   databaseTimeStamp = () => app.database.ServerValue.TIMESTAMP;
 
   doCreateUserWithEmailAndPassword = (email, password) =>

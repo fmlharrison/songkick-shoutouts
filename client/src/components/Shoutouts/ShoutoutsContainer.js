@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { compose } from "recompose";
+import electron from "electron";
 
 import Shoutouts from "./Shoutouts";
 import Sidebar from "./Sidebar/SidebarContainer";
@@ -7,12 +8,17 @@ import Sidebar from "./Sidebar/SidebarContainer";
 import { withFirebase } from "../Firebase";
 
 import "./Shoutouts.css";
+import shoutoutIcon from "../../images/icon-megaphone.png";
+
+const fs = electron.remote.require('fs');
+const ipcRenderer  = electron.ipcRenderer;
 
 class ShoutoutsContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      shoutOuts: []
+      shoutOuts: [],
+      showSideBar: false
     };
   }
 
@@ -38,6 +44,11 @@ class ShoutoutsContainer extends Component {
     });
   };
 
+  toggleSideBar = () => {
+    const sideBarState = this.state.showSideBar
+    this.setState({ showSideBar: !sideBarState })
+  };
+
   render() {
     return (
       <div className="main">
@@ -45,8 +56,17 @@ class ShoutoutsContainer extends Component {
           {this.state.shoutOuts.map(shout => {
             return <Shoutouts shoutout={shout} />;
           })}
+          <input
+            className="megaphone-icon"
+            type="image"
+            src={shoutoutIcon}
+            alt="Send a shoutout"
+            onClick={this.toggleSideBar}
+          />
         </div>
-        <Sidebar updateShoutouts={this.updateShoutouts} />
+        {this.state.showSideBar ? (
+          <Sidebar updateShoutouts={this.updateShoutouts} />
+        ) : null}
       </div>
     );
   }

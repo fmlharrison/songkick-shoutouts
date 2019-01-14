@@ -1,6 +1,5 @@
 .main .sidebar
 {
-  height: 100%;
   width: 30%;
   min-width: 300px;
   padding: 20px 10px;
@@ -28,7 +27,6 @@
 .main .sidebar .form .form-item
 {
   width: 100%;
-  height: 30px;
   margin-bottom: 10px;
   font-size: 18px;
   padding: 5px;
